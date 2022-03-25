@@ -16,11 +16,47 @@ USER_GUESSES_COLOR = 'yellow'
 
 #functions
 def mathOperation(result):
-  mathPieces = []
+  noOfNumbers =int(500/50)
+  numbers = []
+  noOfshowingNumbers = random.randint(1,(noOfNumbers - 1))
+  showingNumbers = []
+  notShowingNumbers = []
   operations = ['+','=']
+   
+  for i in range(noOfNumbers):
+    number = random.randint(0,result)
+    numbers.append(number)
+    result -= number
+  
+  #numbers that are showing adding to 'showingNumbers' list
+  j = 0
+  while(j < noOfshowingNumbers):
+    #randomly picking an index number between 0 and 9
+    x = random.randint(0,(noOfNumbers-1))
+    #getting the value of that random index from numbers list
+    randomNumber = numbers[x]
+    #adding that value to showingNumbers list if it isn't already exists
+    if (randomNumber not in showingNumbers):
+      showingNumbers.append(randomNumber)
+      j += 1
+  
+  #numbers that aren't showing adding to notShowing numbers list
+  noOfNotShowingNumbers = noOfNumbers - noOfshowingNumbers
+  for i in range(noOfNotShowingNumbers+1):
+    #getting numbers from noumbers list
+    randomNumber2 = numbers[i]
+    #if that number not already exists in showingNumbers list adding it to notShowingNumbers list
+    if (randomNumber2 not in showingNumbers):
+      notShowingNumbers.append(randomNumber2)
+    elif (randomNumber2 == 0):
+      notShowingNumbers.append(0)
+  
+  print('no of not showing numbers: ', noOfNumbers - noOfshowingNumbers)
+  print('not showing numbers: ',notShowingNumbers)
+  print("no of showing number: ",noOfshowingNumbers)
+  print(showingNumbers)
+  return numbers
 
-  for number in mathPieces:
-    return number + operations[0]
 
 def randomResultDigitsGenerator():
   pass
@@ -38,7 +74,7 @@ result = random.randint(0,1000)
 no_columns = int(GAME_WIDTH/SPACE_WIDTH)
 no_rows = int(GAME_HEIGHT/SPACE_WIDTH)
 
-math_operation_label = Label(window,text="{} = {}".format(randomResultDigitsGenerator(),result),font=('consalas',20),bg=BACKGROUND_COLOR,fg = TEXT_COLOR)
+math_operation_label = Label(window,text="{} = {}".format(mathOperation(result),result),font=('consalas',20),bg=BACKGROUND_COLOR,fg = TEXT_COLOR)
 math_operation_label.pack()
 
 
